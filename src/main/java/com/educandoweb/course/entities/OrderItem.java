@@ -2,6 +2,7 @@ package com.educandoweb.course.entities;
 
 import com.educandoweb.course.entities.pk.OrderItemPK;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -12,6 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order_item")
+@JsonPropertyOrder({ "quantity", "price", "subTotal", "product" })
 public class OrderItem implements Serializable {
 
     @Serial
@@ -49,7 +51,13 @@ public class OrderItem implements Serializable {
     public void setProduct(Product product){
         id.setProduct(product);
     }
+    public Double getPrice() {
+        return price;
+    }
 
+    public void setPrice(Double price) {
+        this.price = price;
+    }
     public Integer getQuantity() {
         return quantity;
     }
@@ -58,12 +66,11 @@ public class OrderItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
-        return price;
-    }
 
-    public void setPrice(Double price) {
-        this.price = price;
+
+
+    public Double getSubTotal(){
+        return price * quantity;
     }
 
     @Override
@@ -77,4 +84,6 @@ public class OrderItem implements Serializable {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+
 }
